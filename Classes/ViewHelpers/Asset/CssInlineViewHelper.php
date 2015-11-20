@@ -2,7 +2,6 @@
 
 namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
 
-
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -15,7 +14,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * ViewHelper to include inline CSS
@@ -43,23 +42,24 @@ use \TYPO3\CMS\Core\Utility\GeneralUtility;
  * </output>
  *
  */
-class CssInlineViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
-	/**
-	 * Include CSS Content
-	 *
-	 * @param boolean $compress Define if file should be compressed
- 	 * @param string $path Path to the CSS file which should be included
-	 * @return void
-	 */
-	public function render($compress = TRUE, $path = NULL) {
-		$content = trim( $this->renderChildren() );
-		if( !is_null( $path ) && strtolower(substr($path, -4)) === '.css' ){
-			$content .= GeneralUtility::getUrl( GeneralUtility::getFileAbsFileName( $path ) );
-		}
-		$name = md5($content);
-		if( !empty( $content ) ){
-			$GLOBALS['TSFE']->getPageRenderer()->addCssInlineBlock($name, $content, $compress);
-		}
-	}
+class CssInlineViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * Include CSS Content
+     *
+     * @param boolean $compress Define if file should be compressed
+     * @param string $path Path to the CSS file which should be included
+     * @return void
+     */
+    public function render($compress = true, $path = null)
+    {
+        $content = trim($this->renderChildren());
+        if (!is_null($path) && strtolower(substr($path, -4)) === '.css') {
+            $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($path));
+        }
+        $name = md5($content);
+        if (!empty($content)) {
+            $GLOBALS['TSFE']->getPageRenderer()->addCssInlineBlock($name, $content, $compress);
+        }
+    }
 }

@@ -35,16 +35,17 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  *       </f:else>
  *   </sj:condition.language>
  */
-class LanguageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper {
-
+class LanguageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper
+{
     /**
      * Render method
      *
      * @param mixed $value
      * @return string
      */
-    public function render( $value ) {
-        if ( $this->getLanguageCode() == $value ) {
+    public function render($value)
+    {
+        if ($this->getLanguageCode() == $value) {
             return $this->renderThenChild();
         } else {
             return $this->renderElseChild();
@@ -54,14 +55,14 @@ class LanguageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractCondit
     /**
      * Get the current language
      */
-    protected function getLanguageCode( ) {
-
+    protected function getLanguageCode()
+    {
         $languageCode = '';
         if (TYPO3_MODE === 'FE') {
             if (isset($GLOBALS['TSFE']->config['config']['language'])) {
                 $languageCode = $GLOBALS['TSFE']->config['config']['language'];
             }
-        } elseif (strlen( $GLOBALS['BE_USER']->uc['lang']) > 0 ) {
+        } elseif (strlen($GLOBALS['BE_USER']->uc['lang']) > 0) {
             $languageCode = $GLOBALS['BE_USER']->uc['lang'];
         }
         return $languageCode;

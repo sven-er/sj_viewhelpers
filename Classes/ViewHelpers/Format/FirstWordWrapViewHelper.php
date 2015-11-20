@@ -14,7 +14,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * ViewHelper to wrap the FirstWord of a Text
  *
@@ -32,29 +33,29 @@ use \TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * </output>
  */
-class FirstWordWrapViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
-	/**
-	 * Wrap the First Word
-	 *
-	 * @param string $content Content string
-	 * @param string $wrap A wrap value - [part 1] | [part 2]
-	 * @return string
-	 */
-	public function render($content = NULL, $wrap = NULL) {
-		if ($content === NULL) {
-			$content = $this->renderChildren();
-		}
-		if ($wrap !== NULL) {
-			$wrapArr = GeneralUtility::trimExplode('|', $wrap);
-			$tempContent = GeneralUtility::trimExplode(' ', $this->renderChildren() );
-			if (count($wrapArr) > 0 && count( $tempContent ) > 0) {
-					$content = $wrapArr[0] . $tempContent[0] . $wrapArr[1];
-					unset($tempContent[0]);
-					$content .= ' ' . implode(' ', $tempContent);
-			}
-		}
-		return $content;
-	}
-
+class FirstWordWrapViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * Wrap the First Word
+     *
+     * @param string $content Content string
+     * @param string $wrap A wrap value - [part 1] | [part 2]
+     * @return string
+     */
+    public function render($content = null, $wrap = null)
+    {
+        if ($content === null) {
+            $content = $this->renderChildren();
+        }
+        if ($wrap !== null) {
+            $wrapArr = GeneralUtility::trimExplode('|', $wrap);
+            $tempContent = GeneralUtility::trimExplode(' ', $this->renderChildren());
+            if (count($wrapArr) > 0 && count($tempContent) > 0) {
+                $content = $wrapArr[0] . $tempContent[0] . $wrapArr[1];
+                unset($tempContent[0]);
+                $content .= ' ' . implode(' ', $tempContent);
+            }
+        }
+        return $content;
+    }
 }

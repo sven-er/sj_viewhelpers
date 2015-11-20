@@ -14,7 +14,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use \TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * ViewHelper to include a inline JS file
  *
@@ -34,25 +35,24 @@ use \TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * </output>
  */
-class JsInlineViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class JsInlineViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * Include JS Content
+     *
+     * @param string $position Optional
+     * @param boolean $compress Define if file should be compressed
+     * @return void
+     */
+    public function render($position = null, $compress = true)
+    {
+        $content = GeneralUtility::minifyJavaScript($this->renderChildren());
+        $name = md5($content);
 
-	/**
-	 * Include JS Content
-	 *
-	 * @param string $position Optional
-	 * @param boolean $compress Define if file should be compressed
-	 * @return void
-	 */
-	public function render($position = NULL, $compress = TRUE) {
-
-		$content = GeneralUtility::minifyJavaScript( $this->renderChildren() );
-		$name = md5($content);
-
-		if( $position == 'bottom' ){
-			$GLOBALS['TSFE']->getPageRenderer()->addJsFooterInlineCode($name, $content, $compress);
-		}else{
-			$GLOBALS['TSFE']->getPageRenderer()->addJsInlineCode($name, $content, $compress);
-		}
-
-	}
+        if ($position == 'bottom') {
+            $GLOBALS['TSFE']->getPageRenderer()->addJsFooterInlineCode($name, $content, $compress);
+        } else {
+            $GLOBALS['TSFE']->getPageRenderer()->addJsInlineCode($name, $content, $compress);
+        }
+    }
 }

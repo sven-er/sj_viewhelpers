@@ -42,29 +42,29 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  * </output>
  *
  */
-class IncludeFileViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class IncludeFileViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * Include a CSS/JS file
+     *
+     * @param string $path Path to the CSS/JS file which should be included
+     * @param boolean $compress Define if file should be compressed
+     * @param boolean $isJsFile Define that file is a JS File, useful for jsFiles withs Params exp: //maps.googleapis.com/maps/api/js?sensor=false
+     * @param boolean $external Define that file is an external File, in getFileName from TYPO3 6.2 is a check for http or https to identify the external File, so files with //maps. ... aren't included
+     * @return void
+     */
+    public function render($path, $compress = false, $isJsFile = false, $external = false)
+    {
+        if ($external === false) {
+            $path = $GLOBALS['TSFE']->tmpl->getFileName($path);
+        }
+        // JS
+        if (strtolower(substr($path, -3)) === '.js' || $isJsFile === true) {
+            $GLOBALS['TSFE']->getPageRenderer()->addJsFooterFile($path, null, $compress, null);
 
-	/**
-	 * Include a CSS/JS file
-	 *
-	 * @param string $path Path to the CSS/JS file which should be included
-	 * @param boolean $compress Define if file should be compressed
-	 * @param boolean $isJsFile Define that file is a JS File, useful for jsFiles withs Params exp: //maps.googleapis.com/maps/api/js?sensor=false
-	 * @param boolean $external Define that file is an external File, in getFileName from TYPO3 6.2 is a check for http or https to identify the external File, so files with //maps. ... aren't included
-	 * @return void
-	 */
-	public function render($path, $compress = FALSE, $isJsFile = FALSE, $external = FALSE) {
-
-		if($external === FALSE){
-			$path = $GLOBALS['TSFE']->tmpl->getFileName($path);
-		}
-		// JS
-		if (strtolower(substr($path, -3)) === '.js' || $isJsFile === TRUE ) {
-			$GLOBALS['TSFE']->getPageRenderer()->addJsFooterFile($path, NULL, $compress, NULL);
-
-		// CSS
-		} elseif (strtolower(substr($path, -4)) === '.css') {
-			$GLOBALS['TSFE']->getPageRenderer()->addCssFile($path, 'stylesheet', 'all', '', $compress);
-		}
-	}
+        // CSS
+        } elseif (strtolower(substr($path, -4)) === '.css') {
+            $GLOBALS['TSFE']->getPageRenderer()->addCssFile($path, 'stylesheet', 'all', '', $compress);
+        }
+    }
 }

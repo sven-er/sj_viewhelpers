@@ -43,14 +43,15 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * </output>
  *
  */
-class HeaderDataViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
-	/**
-	 * Renders HeaderData
-	 *
-	 * @return void
-	*/
-	public function render() {
-		$GLOBALS['TSFE']->getPageRenderer()->addHeaderData( $this->renderChildren() );
-	}
+class HeaderDataViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * Renders HeaderData
+     *
+     * @return void
+    */
+    public function render()
+    {
+        $GLOBALS['TSFE']->getPageRenderer()->addHeaderData($this->renderChildren());
+    }
 }

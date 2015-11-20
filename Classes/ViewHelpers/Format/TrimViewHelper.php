@@ -14,7 +14,6 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use \TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Trims content by stripping off $characters
@@ -34,17 +33,18 @@ use \TYPO3\CMS\Core\Utility\GeneralUtility;
  * 	Inline usage example
  * 	{sj:format.trim(content: 'foo', characters: 'foo')}
  */
-class TrimViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
-	public function render($content = NULL, $characters = NULL) {
-		if ($content === NULL) {
-			$content = $this->renderChildren();
-		}
-		if ( empty($characters) === FALSE) {
-			$content = trim($content, $characters);
-		} else {
-			$content = trim($content);
-		}
-		return $content;
-	}
+class TrimViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    public function render($content = null, $characters = null)
+    {
+        if ($content === null) {
+            $content = $this->renderChildren();
+        }
+        if (empty($characters) === false) {
+            $content = trim($content, $characters);
+        } else {
+            $content = trim($content);
+        }
+        return $content;
+    }
 }

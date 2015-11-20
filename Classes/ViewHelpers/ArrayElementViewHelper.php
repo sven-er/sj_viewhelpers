@@ -39,26 +39,26 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * </output>
  *
   */
-class ArrayElementViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class ArrayElementViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * @param array $array to search in
+     * @param string $key to search for
+     * @param string $variableName variable name to set
+     * @return string
+     */
+    public function render($array, $key, $variableName = 'element')
+    {
+        if (!is_array($array) || empty($array) || !isset($array[$key])) {
+            $value = null;
+        } else {
+            $value = $array[$key];
+        }
 
-	 /**
-	 * @param array $array to search in
-	 * @param string $key to search for
-	 * @param string $variableName variable name to set
-	 * @return string
-	 */
-	public function render($array, $key, $variableName = 'element') {
+        $this->templateVariableContainer->add($variableName, $value);
+        $content = $this->renderChildren();
+        $this->templateVariableContainer->remove($variableName);
 
-		if (!is_array($array) || empty($array) || !isset($array[$key]) ) {
-			$value = NULL;
-		}else{
-			$value = $array[$key];
- 		}
-
-		$this->templateVariableContainer->add($variableName, $value);
-		$content = $this->renderChildren();
-		$this->templateVariableContainer->remove($variableName);
-
-		return $content;
-	}
+        return $content;
+    }
 }

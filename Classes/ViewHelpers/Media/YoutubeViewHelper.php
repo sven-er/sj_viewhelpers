@@ -34,56 +34,57 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  * <output>
  *
  */
-class YoutubeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper	 {
+class YoutubeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * Initialize arguments.
+     *
+     * @return void
+     * @api
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('width', 'integer', 'Width of the video in pixels. Defaults to 640 for 16:9 content.', false, 640);
+        $this->registerArgument('height', 'integer', 'Height of the video in pixels. Defaults to 385 for 16:9 content.', false, 385);
+    }
 
-	/**
-	 * Initialize arguments.
-	 *
-	 * @return void
-	 * @api
-	 */
-	public function initializeArguments() {
-		$this->registerArgument('width', 'integer', 'Width of the video in pixels. Defaults to 640 for 16:9 content.', FALSE, 640);
-		$this->registerArgument('height', 'integer', 'Height of the video in pixels. Defaults to 385 for 16:9 content.', FALSE, 385);
-	}
+    /**
+     * Render method
+     *
+     * @return string
+     */
+    public function render()
+    {
+        $width = $this->arguments['width'];
+        $height = $this->arguments['height'];
+        $content = '';
 
-	/**
-	 * Render method
-	 *
-	 * @return string
-	 */
-	public function render() {
+        $url = $this->getYoutubeUrl($this->renderChildren());
 
-		$width = $this->arguments['width'];
-		$height = $this->arguments['height'];
-		$content = '';
+        if (!is_null($url)) {
+            $content = '<iframe width="' . $width . '" height="' . $height . '" src="' . htmlspecialchars($url) . '" frameborder="0"></iframe>';
+        }
 
-		$url = $this->getYoutubeUrl( $this->renderChildren() );
-
-		if (!is_null($url)) {
-			$content = '<iframe width="' . $width . '" height="' . $height . '" src="' . htmlspecialchars($url) . '" frameborder="0"></iframe>';
-		}
-
-		return $content;
-	}
+        return $content;
+    }
 
 
-	/**
-	 * @param string $element
-	 * @return null|string
-	 */
-	public function getYoutubeUrl($element) {
-		$videoId = NULL;
-		$youtubeUrl = NULL;
+    /**
+     * @param string $element
+     * @return null|string
+     */
+    public function getYoutubeUrl($element)
+    {
+        $videoId = null;
+        $youtubeUrl = null;
 
-		if (preg_match('/(v=|v\\/|.be\\/)([^(\\&|$)]*)/', $element, $matches)) {
-			$videoId = $matches[2];
-		}
-		if ($videoId) {
-			$youtubeUrl = 'http://www.youtube.com/embed/' . $videoId . '?fs=1&wmode=opaque';
-		}
+        if (preg_match('/(v=|v\\/|.be\\/)([^(\\&|$)]*)/', $element, $matches)) {
+            $videoId = $matches[2];
+        }
+        if ($videoId) {
+            $youtubeUrl = 'http://www.youtube.com/embed/' . $videoId . '?fs=1&wmode=opaque';
+        }
 
-		return $youtubeUrl;
-	}
-
+        return $youtubeUrl;
+    }
 }

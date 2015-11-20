@@ -32,19 +32,21 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Link;
  *  <sj:link.typolink configuration="{typoLinkConfiguration}" />
  *  <sj:link.typolink configuration="{object}">My LinkText</sj:link.typolink>
 */
-class TypolinkViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class TypolinkViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * Initializes the arguments for the ViewHelper
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('configuration', 'array', 'The typoLink configuration', true);
+    }
 
-	/**
-	 * Initializes the arguments for the ViewHelper
-	 */
-	public function initializeArguments() {
-		$this->registerArgument('configuration', 'array', 'The typoLink configuration', TRUE);
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function render() {
-		return $GLOBALS['TSFE']->cObj->typoLink( trim($this->renderChildren()), $this->arguments['configuration']);
-	}
+    /**
+     * @return mixed
+     */
+    public function render()
+    {
+        return $GLOBALS['TSFE']->cObj->typoLink(trim($this->renderChildren()), $this->arguments['configuration']);
+    }
 }
