@@ -30,7 +30,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  *
  * NEW:
  * <code>
- * {namespace sj=SvenJuergens\SjViewHelpers\Viewhelpers}
+ * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
  *
  * <code>

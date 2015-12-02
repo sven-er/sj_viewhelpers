@@ -26,7 +26,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * {namespace sj=Tx_Sjviewhelpers_ViewHelpers}
  *
  * NEW:
- * * {namespace sj=SvenJuergens\SjViewHelpers\Viewhelpers}
+ * * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  *
  * # Example: Basic example
  * <code>

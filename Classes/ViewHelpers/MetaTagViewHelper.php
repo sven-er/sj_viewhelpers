@@ -29,7 +29,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewHelpers\Viewhelpers}
+ * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
  *
  *

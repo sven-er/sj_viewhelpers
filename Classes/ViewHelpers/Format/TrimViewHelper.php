@@ -23,7 +23,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewHelpers\Viewhelpers}
+ * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
  *
  * <sj:format.trim content="foo" characters="foo">

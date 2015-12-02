@@ -26,7 +26,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Link;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewHelpers\Viewhelpers}
+ * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
  *
  *  <sj:link.typolink configuration="{typoLinkConfiguration}" />

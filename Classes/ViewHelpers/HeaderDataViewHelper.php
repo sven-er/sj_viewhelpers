@@ -27,7 +27,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * Original from EXT:news
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewHelpers\Viewhelpers}
+ * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
  *
  * <code>

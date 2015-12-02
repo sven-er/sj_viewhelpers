@@ -25,7 +25,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewHelpers\Viewhelpers}
+ * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
  *
  *

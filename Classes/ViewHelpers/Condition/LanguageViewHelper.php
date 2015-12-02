@@ -23,7 +23,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewHelpers\Viewhelpers}
+ * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
  *
   * <sj:condition.language value="de">
