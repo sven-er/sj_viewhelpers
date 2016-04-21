@@ -1,6 +1,6 @@
 <?php
 
-namespace SvenJuergens\SjViewhelpers\ViewHelpers;
+namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
 
 /**
  * This file is part of the TYPO3 CMS project.
@@ -15,7 +15,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
+
 /**
  * ViewHelper to wrap the FirstWord of a Text
  *
@@ -53,7 +53,6 @@ class ExplodeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHel
         if($contentString === null){
             return $this->renderChildren();
         }
-
         if($by === null){
             $by = "PHP_EOL";
             $isAConstant = true;
