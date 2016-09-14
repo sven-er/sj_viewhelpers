@@ -14,7 +14,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Link;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * ### TypolinkViewhelper
  *
@@ -32,7 +32,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Link;
  *  <sj:link.typolink configuration="{typoLinkConfiguration}" />
  *  <sj:link.typolink configuration="{object}">My LinkText</sj:link.typolink>
 */
-class TypolinkViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class TypolinkViewHelper extends AbstractViewHelper
 {
     /**
      * Initializes the arguments for the ViewHelper

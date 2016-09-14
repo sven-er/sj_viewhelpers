@@ -14,7 +14,9 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * ViewHelper to include a inline JS file
@@ -25,17 +27,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
- * </code>
- *
- * <code>
  * <sj:asset.jsInline position="bottom"> ... </sj:asset.jsInline>
  * </code>
  * <output>
  *
  * </output>
  */
-class JsInlineViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class JsInlineViewHelper extends AbstractViewHelper
 {
     /**
      * Include JS Content
@@ -49,10 +47,12 @@ class JsInlineViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHe
         $content = GeneralUtility::minifyJavaScript($this->renderChildren());
         $name = md5($content);
 
+        /** @var PageRenderer $pageRenderer */
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         if ($position == 'bottom') {
-            $GLOBALS['TSFE']->getPageRenderer()->addJsFooterInlineCode($name, $content, $compress);
+            $pageRenderer->addJsFooterInlineCode($name, $content, $compress);
         } else {
-            $GLOBALS['TSFE']->getPageRenderer()->addJsInlineCode($name, $content, $compress);
+            $pageRenderer->addJsInlineCode($name, $content, $compress);
         }
     }
 }

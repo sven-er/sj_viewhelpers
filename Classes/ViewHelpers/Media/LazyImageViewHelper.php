@@ -15,6 +15,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper;
+use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
 
 /* Extends the ImageViewhelper to allow lazyload
  *
@@ -37,10 +39,9 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  * </output>
  *
  *
- *
 */
 
-class LazyImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
+class LazyImageViewHelper extends ImageViewHelper
 {
     /**
      * Initialize arguments.
@@ -73,7 +74,7 @@ class LazyImageViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper
     public function render($src = null, $width = null, $height = null, $minWidth = null, $minHeight = null, $maxWidth = null, $maxHeight = null, $treatIdAsReference = false, $image = null)
     {
         if (is_null($src) && is_null($image) || !is_null($src) && !is_null($image)) {
-            throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('You must either specify a string src or a File object.', 1382284106);
+            throw new Exception('You must either specify a string src or a File object.', 1382284106);
         }
         $image = $this->imageService->getImage($src, $image, $treatIdAsReference);
         $processingInstructions = array(

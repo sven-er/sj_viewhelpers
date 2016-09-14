@@ -15,7 +15,9 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
  *
@@ -48,7 +50,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * <meta name="keywords" content="news 1, news 2" />
  * </output>
  */
-class MetaTagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper
+class MetaTagViewHelper extends AbstractTagBasedViewHelper
 {
     /**
      * @var string
@@ -91,7 +93,8 @@ class MetaTagViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBase
         }
 
         if ($useCurrentDomain || (isset($this->arguments['content']) && !empty($this->arguments['content']))) {
-            $GLOBALS['TSFE']->getPageRenderer()->addMetaTag($this->tag->render());
+            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+            $pageRenderer->addMetaTag($this->tag->render());
         }
     }
 }

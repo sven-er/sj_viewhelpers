@@ -14,7 +14,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 /**
  * If Viewhelper vor TestInt
  * Inspired by Björn Fromme, EXT:vhs
@@ -35,7 +36,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  *       </f:else>
  *   </sj:condition.testInt>
  */
-class TestIntViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper
+class TestIntViewHelper extends AbstractConditionViewHelper
 {
     /**
      * Render method
@@ -45,21 +46,10 @@ class TestIntViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditi
      */
     public function render($value)
     {
-        if ($this->canBeInterpretedAsInteger($value) === true) {
+        if (MathUtility::canBeInterpretedAsInteger($value) === true) {
             return $this->renderThenChild();
         } else {
             return $this->renderElseChild();
         }
-    }
-
-    /*
-    * Copy from canBeInterpretedAsIntegeger TYPO3 6.1.3
-    */
-    public function canBeInterpretedAsInteger($var)
-    {
-        if ($var === '' || is_object($var) || is_array($var)) {
-            return false;
-        }
-        return (string) intval($var) === (string) $var;
     }
 }

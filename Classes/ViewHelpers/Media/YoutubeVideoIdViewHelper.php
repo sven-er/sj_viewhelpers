@@ -15,6 +15,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Implementation of youtube support
@@ -34,7 +35,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  * <output>
  *
  */
-class YoutubeVideoIdViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class YoutubeVideoIdViewHelper extends AbstractViewHelper
 {
 
     /**
@@ -55,7 +56,6 @@ class YoutubeVideoIdViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abstract
     public function getYoutubeVideoId($element)
     {
         $videoId = null;
-
         if (preg_match('/(v=|v\\/|.be\\/)([^(\\&|$)]*)/', $element, $matches)) {
             $videoId = $matches[2];
         }

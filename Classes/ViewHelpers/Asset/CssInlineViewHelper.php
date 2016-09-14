@@ -14,7 +14,9 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * ViewHelper to include inline CSS
@@ -22,10 +24,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * # Example:
  * Include in template
  *
- * OLD:
- * {namespace sj=Tx_Sjviewhelpers_ViewHelpers}
- *
- * NEW:
  * * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  *
  * # Example: Basic example
@@ -42,7 +40,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * </output>
  *
  */
-class CssInlineViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class CssInlineViewHelper extends AbstractViewHelper
 {
     /**
      * Include CSS Content
@@ -59,7 +57,9 @@ class CssInlineViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewH
         }
         $name = md5($content);
         if (!empty($content)) {
-            $GLOBALS['TSFE']->getPageRenderer()->addCssInlineBlock($name, $content, $compress);
+            /** @var PageRenderer $pageRenderer */
+            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+            $pageRenderer->addCssInlineBlock($name, $content, $compress);
         }
     }
 }

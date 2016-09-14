@@ -14,6 +14,9 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * ViewHelper to include a css/js file
@@ -23,12 +26,6 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  *
  * Include in template
  *
- * OLD:
- * <code>
- * {namespace sj=Tx_Sjviewhelpers_ViewHelpers}
- * </code>
- *
- * NEW:
  * <code>
  * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
@@ -42,7 +39,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  * </output>
  *
  */
-class IncludeFileViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class IncludeFileViewHelper extends AbstractViewHelper
 {
     /**
      * Include a CSS/JS file
@@ -58,13 +55,15 @@ class IncludeFileViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVie
         if ($external === false) {
             $path = $GLOBALS['TSFE']->tmpl->getFileName($path);
         }
+        /** @var PageRenderer $pageRenderer */
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         // JS
         if (strtolower(substr($path, -3)) === '.js' || $isJsFile === true) {
-            $GLOBALS['TSFE']->getPageRenderer()->addJsFooterFile($path, null, $compress, null);
+            $pageRenderer->addJsFooterFile($path, null, $compress, null);
 
         // CSS
         } elseif (strtolower(substr($path, -4)) === '.css') {
-            $GLOBALS['TSFE']->getPageRenderer()->addCssFile($path, 'stylesheet', 'all', '', $compress);
+            $pageRenderer->addCssFile($path, 'stylesheet', 'all', '', $compress);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 /**
  * If Viewhelper vor LanguageCode
  * Inspired by Maximilian Kalus, http://www.auxnet.de/typo3-sprachen-viewhelper-fuer-fluid/
@@ -35,7 +35,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  *       </f:else>
  *   </sj:condition.language>
  */
-class LanguageViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper
+class LanguageViewHelper extends AbstractConditionViewHelper
 {
     /**
      * Render method

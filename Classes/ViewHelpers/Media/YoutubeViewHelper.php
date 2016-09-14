@@ -15,6 +15,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Implementation of youtube support
@@ -34,7 +35,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  * <output>
  *
  */
-class YoutubeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class YoutubeViewHelper extends AbstractViewHelper
 {
     /**
      * Initialize arguments.

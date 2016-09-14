@@ -15,7 +15,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
-
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  *
  * ViewHelper to get an Arraykey
@@ -39,7 +39,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * </output>
  *
   */
-class ArrayElementViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class ArrayElementViewHelper extends AbstractViewHelper
 {
     /**
      * @param array $array to search in

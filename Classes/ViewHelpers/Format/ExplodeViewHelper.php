@@ -15,6 +15,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * ViewHelper to wrap the FirstWord of a Text
@@ -37,7 +38,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * </output>
  */
-class ExplodeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class ExplodeViewHelper extends AbstractViewHelper
 {
     /**
      * Make an array out of String by Linebreak
