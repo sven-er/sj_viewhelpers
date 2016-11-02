@@ -37,15 +37,24 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
  */
 class LanguageViewHelper extends AbstractConditionViewHelper
 {
+
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('value', 'string', 'Language Code');
+    }
+
     /**
      * Render method
      *
-     * @param mixed $value
      * @return string
      */
-    public function render($value)
+    public function render()
     {
-        if ($this->getLanguageCode() == $value) {
+        if ($this->getLanguageCode() == $this->arguments['value']) {
             return $this->renderThenChild();
         } else {
             return $this->renderElseChild();
