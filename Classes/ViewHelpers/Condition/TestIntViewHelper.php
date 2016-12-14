@@ -38,15 +38,24 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
  */
 class TestIntViewHelper extends AbstractConditionViewHelper
 {
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('value', 'string', 'value to test');
+    }
+
+
     /**
      * Render method
      *
-     * @param mixed $value
      * @return string
      */
-    public function render($value)
+    public function render()
     {
-        if (MathUtility::canBeInterpretedAsInteger($value) === true) {
+        if (MathUtility::canBeInterpretedAsInteger($this->arguments['value']) === true) {
             return $this->renderThenChild();
         } else {
             return $this->renderElseChild();
