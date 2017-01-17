@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://typo3.org/ns/SvenJuergens/SjViewhelpers"><xsd:element name="arrayElement"><xsd:annotation><xsd:documentation><![CDATA[ViewHelper to get an Arraykey
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"><xsd:element name="arrayElement"><xsd:annotation><xsd:documentation><![CDATA[ViewHelper to get an Arraykey
  Original Maximilian Kalus, http://www.auxnet.de/typo3-array-viewhelper-holt-variable-aus-array/
 
  # Example: Basic example
