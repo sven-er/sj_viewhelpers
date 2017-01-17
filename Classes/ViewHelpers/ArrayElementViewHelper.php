@@ -16,6 +16,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  */
 
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
  *
  * ViewHelper to get an Arraykey
