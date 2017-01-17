@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://typo3.org/ns/SvenJuergens/SjViewhelpers"><xsd:element name="arrayElement"><xsd:annotation><xsd:documentation><![CDATA[ViewHelper to get an Arraykey
+ Original Maximilian Kalus, http://www.auxnet.de/typo3-array-viewhelper-holt-variable-aus-array/
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+
+ <code>
+  <sj:arrayElement array="{array}" key="{lang}" variableName="myValue">
+   <p>{myValue}</p>
+  </sj:arrayElement>
+ </code>
+ <output>
+ 	"array[arrayKey]"
+ </output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="array" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="key" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="variableName"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="asset.cssInline"><xsd:annotation><xsd:documentation><![CDATA[ViewHelper to include inline CSS
+
+ # Example:
+ Include in template
+
+ * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+
+ # Example: Basic example
+ <code>
+ <sj:asset.cssInline > .test{display:block ...} </sj:asset.cssInline>
+ </code>
+
+ <code>
+ <sj:asset.cssInline path="{settings.cssInlineFile}"> .test{ display:block ...} </sj:asset.cssInline>
+ </code>
+
+ <output>
+
+ </output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="compress"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="path"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="asset.includeFile"><xsd:annotation><xsd:documentation><![CDATA[ViewHelper to include a css/js file
+ Original taken from EXT:news
+
+ # Example: Basic example
+
+ Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+ <code>
+ <sj:asset.includeFile path="{settings.cssFile}" />
+ <sj:asset.includeFile path="//maps.google.com/maps/api/js?sensor=false&libraries=geometry&v=3.7&hnear=Deutschland" isJsFile="true"/>
+ </code>
+ <output>
+ This will include the file provided by {settings} in the footer (js) or in the header (css)
+ </output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="path" use="required"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="compress"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="isJsFile"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="external"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="asset.jsInline"><xsd:annotation><xsd:documentation><![CDATA[ViewHelper to include a inline JS file
+
+
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ <sj:asset.jsInline position="bottom"> ... </sj:asset.jsInline>
+ </code>
+ <output>
+
+ </output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="position"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="compress"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="condition.language"><xsd:annotation><xsd:documentation><![CDATA[If Viewhelper vor LanguageCode
+ Inspired by Maximilian Kalus, http://www.auxnet.de/typo3-sprachen-viewhelper-fuer-fluid/
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+ <sj:condition.language value="de">
+       <f:then>
+         <f:render partial="de" />
+       </f:then>
+       <f:else>
+           <f:render partial="en" />
+       </f:else>
+   </sj:condition.language>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="then"><xsd:annotation><xsd:documentation><![CDATA[Value to be returned if the condition if met.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="else"><xsd:annotation><xsd:documentation><![CDATA[Value to be returned if the condition if not met.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="value"><xsd:annotation><xsd:documentation><![CDATA[Language Code]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="condition.testInt"><xsd:annotation><xsd:documentation><![CDATA[If Viewhelper vor TestInt
+ Inspired by Björn Fromme, EXT:vhs
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+ <sj:condition.testInt value="{uid}">
+       <f:then>
+         // do this
+       </f:then>
+       <f:else>
+           // do that
+       </f:else>
+   </sj:condition.testInt>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="then"><xsd:annotation><xsd:documentation><![CDATA[Value to be returned if the condition if met.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="else"><xsd:annotation><xsd:documentation><![CDATA[Value to be returned if the condition if not met.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="value"><xsd:annotation><xsd:documentation><![CDATA[value to test]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="format.explode"><xsd:annotation><xsd:documentation><![CDATA[ViewHelper to wrap the FirstWord of a Text
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+ <code>
+  <sj:format.explode contentString="{teaser.bodytext}" by="PHP_EOL" isAConstant="true" returnAs="elements">
+  <f:for each="{elements}" as="element">
+    <p>{element}</p>
+  </f:for>
+  </sj:format.explode>
+ </code>
+ <output>
+
+ </output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="contentString"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="by"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="isAConstant"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="returnAs"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="format.firstWordWrap"><xsd:annotation><xsd:documentation><![CDATA[ViewHelper to wrap the FirstWord of a Text
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+ <code>
+ <sj:format.firstWordWrap wrap="<strong>|</strong>"> {headline} </sj:format.firstWordWrap>
+ </code>
+ <output>
+
+ </output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="content"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="wrap"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="format.trim"><xsd:annotation><xsd:documentation><![CDATA[Trims content by stripping off $characters
+ Original from EXT:vhs
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+ <sj:format.trim content="foo" characters="foo">
+ <!-- tag content - may be ignored! -->
+ </sj:format.trim>
+
+    Inline usage example
+    {sj:format.trim(content: 'foo', characters: 'foo')}]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="content"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="characters"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="headerData"><xsd:annotation><xsd:documentation><![CDATA[\TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+
+ ViewHelper to render data in <head> section of website
+
+ # Example: Basic example
+ # Include in template
+
+ Original from EXT:news
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+ <code>
+ <sj:headerData>
+ 		<link rel="alternate"
+ 			type="application/rss+xml"
+ 			title="RSS 2.0"
+ 			href="<f:uri.page additionalParams="{type:9818}"/>" />
+ </sj:headerData>
+ </code>
+ <output>
+ Added to the header: <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="uri to this page and type 9818" />
+ </output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="link.typolink"><xsd:annotation><xsd:documentation><![CDATA[### TypolinkViewhelper
+
+ Renders a link with the TypoLink function.
+ Can be used with the LinkWizard
+ Original form ext:vhs
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+  <sj:link.typolink configuration="{typoLinkConfiguration}" />
+  <sj:link.typolink configuration="{object}">My LinkText</sj:link.typolink>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="configuration" use="required"><xsd:annotation><xsd:documentation><![CDATA[The typoLink configuration]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="media.lazyImage"><xsd:annotation><xsd:documentation><![CDATA[This file is part of the TYPO3 CMS project.
+
+ It is free software; you can redistribute it and/or modify it under
+ the terms of the GNU General Public License, either version 2
+ of the License, or any later version.
+
+ For the full copyright and license information, please read the
+ LICENSE.txt file that was distributed with this source code.
+
+ The TYPO3 project - inspiring people to share!]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="additionalAttributes"><xsd:annotation><xsd:documentation><![CDATA[Additional tag attributes. They will be added directly to the resulting HTML tag.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="data"><xsd:annotation><xsd:documentation><![CDATA[Additional data-* attributes. They will each be added with a "data-" prefix.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="src"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="width"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="height"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="minWidth"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="minHeight"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="maxWidth"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="maxHeight"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="treatIdAsReference"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="image"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="crop"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="absolute"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="class"><xsd:annotation><xsd:documentation><![CDATA[CSS class(es) for this element]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="dir"><xsd:annotation><xsd:documentation><![CDATA[Text direction for this HTML element. Allowed strings: "ltr" (left to right), "rtl" (right to left)]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="id"><xsd:annotation><xsd:documentation><![CDATA[Unique (in this file) identifier for this HTML element.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="lang"><xsd:annotation><xsd:documentation><![CDATA[Language for this element. Use short names specified in RFC 1766]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="style"><xsd:annotation><xsd:documentation><![CDATA[Individual CSS styles for this element]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="title"><xsd:annotation><xsd:documentation><![CDATA[Tooltip text of element]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="accesskey"><xsd:annotation><xsd:documentation><![CDATA[Keyboard shortcut to access this element]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="tabindex"><xsd:annotation><xsd:documentation><![CDATA[Specifies the tab order of this element]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="onclick"><xsd:annotation><xsd:documentation><![CDATA[JavaScript evaluated for the onclick event]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="alt"><xsd:annotation><xsd:documentation><![CDATA[Specifies an alternate text for an image]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="ismap"><xsd:annotation><xsd:documentation><![CDATA[Specifies an image as a server-side image-map. Rarely used. Look at usemap instead]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="longdesc"><xsd:annotation><xsd:documentation><![CDATA[Specifies the URL to a document that contains a long description of an image]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="usemap"><xsd:annotation><xsd:documentation><![CDATA[Specifies an image as a client-side image-map]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="data-lazy"><xsd:annotation><xsd:documentation><![CDATA[original image for lazy loading]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="media.youtubeVideoId"><xsd:annotation><xsd:documentation><![CDATA[Implementation of youtube support
+ It's a Mix from Tx_Vhs_ViewHelpers_Media_YoutubeViewHelper
+ and Tx_News_MediaRenderer_Video_Youtube
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+ <code>
+ <sj:media.youtubeVideoId> http://youtu.be/E3vwLoDSBLQ </sj:media.youtubeVideoId>
+ </code>
+ <output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="media.youtube"><xsd:annotation><xsd:documentation><![CDATA[Implementation of youtube support
+ It's a Mix from Tx_Vhs_ViewHelpers_Media_YoutubeViewHelper
+ and Tx_News_MediaRenderer_Video_Youtube
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+ <code>
+ <sj:media.youtube width="600" height="400"> http://youtu.be/E3vwLoDSBLQ </sj:media.youtube>
+ </code>
+ <output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="width"><xsd:annotation><xsd:documentation><![CDATA[Width of the video in pixels. Defaults to 640 for 16:9 content.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="height"><xsd:annotation><xsd:documentation><![CDATA[Height of the video in pixels. Defaults to 385 for 16:9 content.]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element><xsd:element name="metaTag"><xsd:annotation><xsd:documentation><![CDATA[ViewHelper to render meta tags
+ Original from EXT:news
+
+
+ # Example: Basic Example: News title as og:title meta tag
+
+ # Example: Basic example
+ # Include in template
+
+ <code>
+ {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ </code>
+
+
+ <code>
+ <sj:metaTag property="og:title" content="{object.title}" />
+ </code>
+ <output>
+ <meta property="og:title" content="TYPO3 is awesome" />
+ </output>
+
+ # Example: Force the attribute "name"
+ <code>
+ <sj:metaTag name="keywords" content="{newsItem.keywords}" />
+ </code>
+ <output>
+ <meta name="keywords" content="news 1, news 2" />
+ </output>]]></xsd:documentation></xsd:annotation><xsd:complexType mixed="true"><xsd:sequence><xsd:any minOccurs="0" maxOccurs="unbounded"/></xsd:sequence><xsd:attribute type="xsd:string" name="additionalAttributes"><xsd:annotation><xsd:documentation><![CDATA[Additional tag attributes. They will be added directly to the resulting HTML tag.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="data"><xsd:annotation><xsd:documentation><![CDATA[Additional data-* attributes. They will each be added with a "data-" prefix.]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="useCurrentDomain"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="forceAbsoluteUrl"><xsd:annotation><xsd:documentation><![CDATA[]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="property"><xsd:annotation><xsd:documentation><![CDATA[Property of meta tag]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="name"><xsd:annotation><xsd:documentation><![CDATA[Content of meta tag using the name attribute]]></xsd:documentation></xsd:annotation></xsd:attribute><xsd:attribute type="xsd:string" name="content"><xsd:annotation><xsd:documentation><![CDATA[Content of meta tag]]></xsd:documentation></xsd:annotation></xsd:attribute></xsd:complexType></xsd:element></xsd:schema>
