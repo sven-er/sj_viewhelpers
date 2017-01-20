@@ -16,6 +16,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -41,29 +42,82 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class IncludeFileViewHelper extends AbstractViewHelper
 {
+
+
+    /**
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('path', 'string', ' Path to the CSS/JS file which should be included');
+        $this->registerArgument('compress', 'boolean', 'Define if file should be compressed', false, false);
+        $this->registerArgument(
+            'isJsFile',
+            'boolean',
+            'Define that file is a JS File, useful for jsFiles withs Params 
+             exp: //maps.googleapis.com/maps/api/js?sensor=false',
+            false,
+            false
+        );
+        $this->registerArgument(
+            'external',
+            'boolean',
+            'Define that file is an external File, in getFileName from TYPO3 6.2
+             is a check for http(s) to identify the external File, so files with //maps. ... are not included',
+            false,
+            false
+        );
+        $this->registerArgument(
+            'async',
+            'boolean',
+            '(Since TYPO3 7.1) Allows the file to be loaded asynchronously, JS only',
+            false,
+            false
+        );
+        $this->registerArgument(
+            'integrity',
+            'string',
+            '(Since TYPO3 7.3) Adds the integrity attribute to the script element to let 
+            browsers ensure subresource integrity, JS only'
+        );
+    }
+
+
     /**
      * Include a CSS/JS file
      *
-     * @param string $path Path to the CSS/JS file which should be included
-     * @param boolean $compress Define if file should be compressed
-     * @param boolean $isJsFile Define that file is a JS File, useful for jsFiles withs Params exp: //maps.googleapis.com/maps/api/js?sensor=false
-     * @param boolean $external Define that file is an external File, in getFileName from TYPO3 6.2 is a check for http or https to identify the external File, so files with //maps. ... aren't included
      * @return void
      */
-    public function render($path, $compress = false, $isJsFile = false, $external = false)
+    public function render()
     {
-        if ($external === false) {
-            $path = $GLOBALS['TSFE']->tmpl->getFileName($path);
+        if ($this->arguments['external'] === false) {
+            $this->arguments['path'] = $GLOBALS['TSFE']->tmpl->getFileName($this->arguments['path']);
         }
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         // JS
-        if (strtolower(substr($path, -3)) === '.js' || $isJsFile === true) {
-            $pageRenderer->addJsFooterFile($path, null, $compress, null);
+        if (strtolower(substr($this->arguments['path'], -3)) === '.js' || $this->arguments['isJsFile'] === true) {
+            $pageRenderer->addJsFooterFile(
+                $this->arguments['path'],
+                null,
+                $this->arguments['compress'],
+                null,
+                null,
+                null,
+                null,
+                $this->arguments['async'],
+                $this->arguments['integrity']
+            );
 
         // CSS
-        } elseif (strtolower(substr($path, -4)) === '.css') {
-            $pageRenderer->addCssFile($path, 'stylesheet', 'all', '', $compress);
+        } elseif (strtolower(substr($this->arguments['path'], -4)) === '.css') {
+            $pageRenderer->addCssFile(
+                $this->arguments['path'],
+                'stylesheet',
+                'all',
+                null,
+                $this->arguments['compress']
+            );
         }
     }
 }
