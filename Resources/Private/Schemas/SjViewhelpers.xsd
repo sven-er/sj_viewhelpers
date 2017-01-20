@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="http://typo3.org/ns/SvenJuergens/SjViewhelpers">
+            targetNamespace="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers">
     <xsd:element name="arrayElement">
         <xsd:annotation>
             <xsd:documentation><![CDATA[ViewHelper to get an Arraykey
