@@ -168,6 +168,11 @@
                     <xsd:documentation><![CDATA[]]></xsd:documentation>
                 </xsd:annotation>
             </xsd:attribute>
+            <xsd:attribute type="xsd:string" name="path">
+                <xsd:annotation>
+                    <xsd:documentation><![CDATA[]]></xsd:documentation>
+                </xsd:annotation>
+            </xsd:attribute>
             <xsd:attribute type="xsd:string" name="compress">
                 <xsd:annotation>
                     <xsd:documentation><![CDATA[]]></xsd:documentation>
