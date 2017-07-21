@@ -23,7 +23,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * # Example:
  * Include in template
  *
- *  {namespace sj=SvenJuergens\NiVisity\ViewHelpers}
+ * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  *
  * # Example: Basic example
  *
