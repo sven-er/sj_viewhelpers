@@ -14,7 +14,6 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -33,14 +32,12 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * <sj:media.youtube width="600" height="400"> http://youtu.be/E3vwLoDSBLQ </sj:media.youtube>
  * </code>
  * <output>
- *
  */
 class YoutubeViewHelper extends AbstractViewHelper
 {
     /**
      * Initialize arguments.
      *
-     * @return void
      * @api
      */
     public function initializeArguments()
@@ -68,7 +65,6 @@ class YoutubeViewHelper extends AbstractViewHelper
 
         return $content;
     }
-
 
     /**
      * @param string $element

@@ -16,7 +16,6 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -38,14 +37,11 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * <output>
  * This will include the file provided by {settings} in the footer (js) or in the header (css)
  * </output>
- *
  */
 class IncludeFileViewHelper extends AbstractViewHelper
 {
 
-
     /**
-     * @return void
      */
     public function initializeArguments()
     {
@@ -82,11 +78,8 @@ class IncludeFileViewHelper extends AbstractViewHelper
         );
     }
 
-
     /**
      * Include a CSS/JS file
-     *
-     * @return void
      */
     public function render()
     {
@@ -109,7 +102,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
                 $this->arguments['integrity']
             );
 
-        // CSS
+            // CSS
         } elseif (strtolower(substr($this->arguments['path'], -4)) === '.css') {
             $pageRenderer->addCssFile(
                 $this->arguments['path'],

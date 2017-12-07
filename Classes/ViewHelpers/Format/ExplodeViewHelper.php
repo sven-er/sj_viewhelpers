@@ -51,14 +51,14 @@ class ExplodeViewHelper extends AbstractViewHelper
      */
     public function render($contentString = null, $by=null, $isAConstant=false, $returnAs = 'elements')
     {
-        if($contentString === null){
+        if ($contentString === null) {
             return $this->renderChildren();
         }
-        if($by === null){
-            $by = "PHP_EOL";
+        if ($by === null) {
+            $by = 'PHP_EOL';
             $isAConstant = true;
         }
-        $value = GeneralUtility::trimExplode( ($isAConstant ? constant($by) : $by), $contentString);
+        $value = GeneralUtility::trimExplode(($isAConstant ? constant($by) : $by), $contentString);
 
         $this->templateVariableContainer->add($returnAs, $value);
         $content = $this->renderChildren();

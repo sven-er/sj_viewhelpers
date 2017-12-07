@@ -10,7 +10,7 @@
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'SJ_Viewhelpers',
     'description' => 'some specific Viewhelpers',
     'category' => 'misc',
@@ -29,14 +29,17 @@ $EM_CONF[$_EXTKEY] = array(
     'clearCacheOnLoad' => 0,
     'lockType' => '',
     'author_company' => '',
-    'version' => '2.0.0',
-    'constraints' => array(
-        'depends' => array(
-        ),
-        'conflicts' => array(
-        ),
-        'suggests' => array(
-        ),
-    ),
+    'version' => '3.0.0',
+    'constraints' => [
+        'depends' => [
+        ],
+        'conflicts' => [
+        ],
+        'suggests' => [
+        ],
+    ],
+    'autoload' =>[
+        'psr-4' => ['SvenJuergens\\SjViewhelpers\\' => 'Classes']
+    ],
     '_md5_values_when_last_written' => 'a:5:{s:9:"ChangeLog";s:4:"3112";s:12:"ext_icon.gif";s:4:"1bdc";s:10:"README.txt";s:4:"ee2d";s:19:"doc/wizard_form.dat";s:4:"4001";s:20:"doc/wizard_form.html";s:4:"2d68";}',
-);
+];

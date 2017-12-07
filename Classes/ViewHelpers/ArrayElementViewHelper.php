@@ -14,11 +14,9 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
- *
  * ViewHelper to get an Arraykey
  * Original Maximilian Kalus, http://www.auxnet.de/typo3-array-viewhelper-holt-variable-aus-array/
  *
@@ -38,7 +36,6 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * <output>
  * 	"array[arrayKey]"
  * </output>
- *
   */
 class ArrayElementViewHelper extends AbstractViewHelper
 {

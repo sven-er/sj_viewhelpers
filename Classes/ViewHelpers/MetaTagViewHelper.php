@@ -14,13 +14,11 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 
 /**
- *
  * ViewHelper to render meta tags
  * Original from EXT:news
  *
@@ -59,8 +57,6 @@ class MetaTagViewHelper extends AbstractTagBasedViewHelper
 
     /**
      * Arguments initialization
-     *
-     * @return void
      */
     public function initializeArguments()
     {
@@ -69,13 +65,11 @@ class MetaTagViewHelper extends AbstractTagBasedViewHelper
         $this->registerTagAttribute('content', 'string', 'Content of meta tag');
     }
 
-
     /**
      * Renders a meta tag
      *
-     * @param boolean $useCurrentDomain If set, current domain is used
-     * @param boolean $forceAbsoluteUrl If set, absolute url is forced
-     * @return void
+     * @param bool $useCurrentDomain If set, current domain is used
+     * @param bool $forceAbsoluteUrl If set, absolute url is forced
      */
     public function render($useCurrentDomain = false, $forceAbsoluteUrl = false)
     {

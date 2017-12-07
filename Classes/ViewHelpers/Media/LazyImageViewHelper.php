@@ -14,7 +14,6 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper;
@@ -46,8 +45,6 @@ class LazyImageViewHelper extends ImageViewHelper
 {
     /**
      * Initialize arguments.
-     *
-     * @return void
      */
     public function initializeArguments()
     {
@@ -65,7 +62,7 @@ class LazyImageViewHelper extends ImageViewHelper
      */
     public function render()
     {
-        if(
+        if (
             (is_null($this->arguments['src']) && is_null($this->arguments['image']))
             || (!is_null($this->arguments['src']) && !is_null($this->arguments['image']))
         ) {
@@ -106,7 +103,7 @@ class LazyImageViewHelper extends ImageViewHelper
                 }
             }
             $this->tag->addAttribute('data-lazy', $imageUri);
-        #    $this->tag->addAttribute('src', $imageUri);
+            //    $this->tag->addAttribute('src', $imageUri);
             $this->tag->addAttribute('width', $processedImage->getProperty('width'));
             $this->tag->addAttribute('height', $processedImage->getProperty('height'));
 

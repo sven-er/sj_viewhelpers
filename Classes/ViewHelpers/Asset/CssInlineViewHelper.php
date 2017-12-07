@@ -38,16 +38,14 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * <output>
  *
  * </output>
- *
  */
 class CssInlineViewHelper extends AbstractViewHelper
 {
     /**
      * Include CSS Content
      *
-     * @param boolean $compress Define if file should be compressed
+     * @param bool $compress Define if file should be compressed
      * @param string $path Path to the CSS file which should be included
-     * @return void
      */
     public function render($compress = true, $path = null)
     {

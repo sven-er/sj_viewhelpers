@@ -17,8 +17,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
- *
  * \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
  *
  * ViewHelper to render data in <head> section of website
@@ -43,14 +43,11 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * <output>
  * Added to the header: <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="uri to this page and type 9818" />
  * </output>
- *
  */
 class HeaderDataViewHelper extends AbstractViewHelper
 {
     /**
      * Renders HeaderData
-     *
-     * @return void
     */
     public function render()
     {

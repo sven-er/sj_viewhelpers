@@ -34,7 +34,6 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class JsInlineViewHelper extends AbstractViewHelper
 {
     /**
-     * @return void
      */
     public function initializeArguments()
     {
@@ -49,11 +48,8 @@ class JsInlineViewHelper extends AbstractViewHelper
         $this->registerArgument('path', 'string', 'Path to the JS file which should be included', false, null);
     }
 
-
     /**
      * Include JS Content
-     *
-     * @return void
      */
     public function render()
     {

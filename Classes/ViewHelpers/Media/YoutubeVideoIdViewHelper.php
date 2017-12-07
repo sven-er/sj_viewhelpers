@@ -14,7 +14,6 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -33,7 +32,6 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * <sj:media.youtubeVideoId> http://youtu.be/E3vwLoDSBLQ </sj:media.youtubeVideoId>
  * </code>
  * <output>
- *
  */
 class YoutubeVideoIdViewHelper extends AbstractViewHelper
 {
@@ -45,9 +43,8 @@ class YoutubeVideoIdViewHelper extends AbstractViewHelper
      */
     public function render()
     {
-        return $this->getYoutubeVideoId( $this->renderChildren() );
+        return $this->getYoutubeVideoId($this->renderChildren());
     }
-
 
     /**
      * @param string $element
