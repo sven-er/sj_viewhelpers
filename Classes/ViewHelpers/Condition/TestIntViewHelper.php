@@ -16,6 +16,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  */
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
+
 /**
  * If Viewhelper vor TestInt
  * Inspired by Björn Fromme, EXT:vhs
@@ -40,25 +41,21 @@ class TestIntViewHelper extends AbstractConditionViewHelper
 {
 
     /**
-     * @return void
+     * Initialize arguments
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
     public function initializeArguments()
     {
-        $this->registerArgument('value', 'string', 'value to test');
+        parent::initializeArguments();
+        $this->registerArgument('value', 'mixed', 'value to test');
     }
 
-
     /**
-     * Render method
-     *
-     * @return string
+     * @param array $arguments
+     * @return bool
      */
-    public function render()
+    protected static function evaluateCondition($arguments = null) : bool
     {
-        if (MathUtility::canBeInterpretedAsInteger($this->arguments['value']) === true) {
-            return $this->renderThenChild();
-        } else {
-            return $this->renderElseChild();
-        }
+        return MathUtility::canBeInterpretedAsInteger($arguments['value']) === true;
     }
 }

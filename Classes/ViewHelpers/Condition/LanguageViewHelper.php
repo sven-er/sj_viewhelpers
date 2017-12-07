@@ -15,6 +15,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
+
 /**
  * If Viewhelper vor LanguageCode
  * Inspired by Maximilian Kalus, http://www.auxnet.de/typo3-sprachen-viewhelper-fuer-fluid/
@@ -38,42 +39,26 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 class LanguageViewHelper extends AbstractConditionViewHelper
 {
 
-
     /**
-     * @return void
+     * Initialize arguments
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
     public function initializeArguments()
     {
         $this->registerArgument('value', 'string', 'Language Code');
     }
 
-    /**
-     * Render method
-     *
-     * @return string
-     */
-    public function render()
-    {
-        if ($this->getLanguageCode() == $this->arguments['value']) {
-            return $this->renderThenChild();
-        } else {
-            return $this->renderElseChild();
-        }
-    }
 
-    /**
-     * Get the current language
-     */
-    protected function getLanguageCode()
+    protected static function evaluateCondition($arguments = null) : bool
     {
         $languageCode = '';
         if (TYPO3_MODE === 'FE') {
             if (isset($GLOBALS['TSFE']->config['config']['language'])) {
                 $languageCode = $GLOBALS['TSFE']->config['config']['language'];
             }
-        } elseif (strlen($GLOBALS['BE_USER']->uc['lang']) > 0) {
+        } elseif (\strlen($GLOBALS['BE_USER']->uc['lang']) > 0) {
             $languageCode = $GLOBALS['BE_USER']->uc['lang'];
         }
-        return $languageCode;
+        return $languageCode === $arguments['value'];
     }
 }
