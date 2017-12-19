@@ -36,6 +36,11 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class TypolinkViewHelper extends AbstractViewHelper
 {
     /**
+     * @var bool
+     */
+    protected $escapeOutput = false;
+
+    /**
      * Initializes the arguments for the ViewHelper
      */
     public function initializeArguments()
