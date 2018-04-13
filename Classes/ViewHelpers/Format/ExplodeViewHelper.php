@@ -24,7 +24,9 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  * </code>
  *
  * <code>
@@ -41,28 +43,61 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class ExplodeViewHelper extends AbstractViewHelper
 {
     /**
+     * Initialize arguments
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument(
+            'contentString',
+            'string',
+            'to change to array',
+            false
+        );
+        $this->registerArgument(
+            'by',
+            'string',
+            'Explode String by this',
+            false
+        );
+        $this->registerArgument(
+            'isAConstant',
+            'bool',
+            'is "$by" a Constant like PHP_EOL',
+            false,
+            false
+        );
+        $this->registerArgument(
+            'returnAs',
+            'string',
+            'variable name to set',
+            false,
+            'elements'
+        );
+    }
+
+    /**
      * Make an array out of String by Linebreak
      *
-     * @param string $contentString to change to array
-     * @param string $by Explode String by this
-     * @param bool $isAConstant is "$by" a Constant like PHP_EOL
-     * @param string $returnAs variable name to set
      * @return string
      */
-    public function render($contentString = null, $by=null, $isAConstant=false, $returnAs = 'elements')
+    public function render(): string
     {
-        if ($contentString === null) {
+        if ($this->arguments['contentString'] === null) {
             return $this->renderChildren();
         }
-        if ($by === null) {
-            $by = 'PHP_EOL';
-            $isAConstant = true;
+        if ($this->arguments['by'] === null) {
+            $this->arguments['by'] = 'PHP_EOL';
+            $this->arguments['isAConstant'] = true;
         }
-        $value = GeneralUtility::trimExplode(($isAConstant ? constant($by) : $by), $contentString);
+        $value = GeneralUtility::trimExplode(
+            ($this->arguments['isAConstant'] ? \constant($this->arguments['by']) : $this->arguments['by']),
+            $this->arguments['contentString']
+        );
 
-        $this->templateVariableContainer->add($returnAs, $value);
+        $this->templateVariableContainer->add($this->arguments['returnAs'], $value);
         $content = $this->renderChildren();
-        $this->templateVariableContainer->remove($returnAs);
+        $this->templateVariableContainer->remove($this->arguments['returnAs']);
         return $content;
     }
 }

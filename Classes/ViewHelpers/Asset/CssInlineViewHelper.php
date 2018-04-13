@@ -24,7 +24,9 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * # Example:
  * Include in template
  *
- * * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  *
  * # Example: Basic example
  * <code>
@@ -41,23 +43,44 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class CssInlineViewHelper extends AbstractViewHelper
 {
+
+    /**
+     * Initialize arguments
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument(
+            'compress',
+            'bool',
+            'Define if file should be compressed',
+            false,
+            true
+        );
+        $this->registerArgument(
+            'path',
+            'string',
+            'Path to the CSS file which should be included',
+            false
+        );
+    }
+
     /**
      * Include CSS Content
      *
-     * @param bool $compress Define if file should be compressed
-     * @param string $path Path to the CSS file which should be included
+     * @throws \InvalidArgumentException
      */
-    public function render($compress = true, $path = null)
+    public function render()
     {
         $content = trim($this->renderChildren());
-        if (!is_null($path) && strtolower(substr($path, -4)) === '.css') {
-            $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($path));
+        if ($this->arguments['path'] !== null && strtolower(substr($this->arguments['path'], -4)) === '.css') {
+            $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($this->arguments['path']));
         }
-        $name = md5($content);
+        $name = sha1($content);
         if (!empty($content)) {
             /** @var PageRenderer $pageRenderer */
             $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-            $pageRenderer->addCssInlineBlock($name, $content, $compress);
+            $pageRenderer->addCssInlineBlock($name, $content, $this->arguments['compress']);
         }
     }
 }

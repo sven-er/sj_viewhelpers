@@ -27,6 +27,10 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * # Include in template
  *
  * <code>
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
+ * <code>
  * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
  *
@@ -42,10 +46,16 @@ class TypolinkViewHelper extends AbstractViewHelper
 
     /**
      * Initializes the arguments for the ViewHelper
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
     public function initializeArguments()
     {
-        $this->registerArgument('configuration', 'array', 'The typoLink configuration', true);
+        $this->registerArgument(
+            'configuration',
+            'array',
+            'The typoLink configuration',
+            true
+        );
     }
 
     /**

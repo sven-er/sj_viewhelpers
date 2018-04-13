@@ -21,9 +21,14 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * ViewHelper to include a inline JS file
  *
- * # Example: Basic example
- * # Include in template
  *
+ * Include in template
+ *
+ * <code>
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
+ * </code>
  * <code>
  * <sj:asset.jsInline position="bottom" path="{settings.jsInlineFile}"> ... </sj:asset.jsInline>
  * </code>
@@ -34,6 +39,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class JsInlineViewHelper extends AbstractViewHelper
 {
     /**
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
     public function initializeArguments()
     {
@@ -44,17 +50,30 @@ class JsInlineViewHelper extends AbstractViewHelper
             false,
             null
         );
-        $this->registerArgument('compress', 'boolean', 'Define if file should be compressed', false, true);
-        $this->registerArgument('path', 'string', 'Path to the JS file which should be included', false, null);
+        $this->registerArgument(
+            'compress',
+            'boolean',
+            'Define if file should be compressed',
+            false,
+            true
+        );
+        $this->registerArgument(
+            'path',
+            'string',
+            'Path to the JS file which should be included',
+            false,
+            null
+        );
     }
 
     /**
      * Include JS Content
+     * @throws \InvalidArgumentException
      */
     public function render()
     {
         $content = trim($this->renderChildren());
-        if (!is_null($this->arguments['path'])
+        if ($this->arguments['path'] !== null
             && strtolower(substr($this->arguments['path'], -3)) === '.js'
         ) {
             $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($this->arguments['path']));
@@ -63,7 +82,7 @@ class JsInlineViewHelper extends AbstractViewHelper
 
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        if ($this->arguments['position'] == 'bottom') {
+        if ($this->arguments['position'] === 'bottom') {
             $pageRenderer->addJsFooterInlineCode($name, $content, $this->arguments['compress']);
         } else {
             $pageRenderer->addJsInlineCode($name, $content, $this->arguments['compress']);

@@ -25,7 +25,9 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  * </code>
  *
  * <code>
@@ -41,7 +43,7 @@ class YoutubeVideoIdViewHelper extends AbstractViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->getYoutubeVideoId($this->renderChildren());
     }

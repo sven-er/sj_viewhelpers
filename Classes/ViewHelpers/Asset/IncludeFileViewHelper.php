@@ -27,7 +27,9 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  * </code>
  *
  * <code>
@@ -42,11 +44,22 @@ class IncludeFileViewHelper extends AbstractViewHelper
 {
 
     /**
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
     public function initializeArguments()
     {
-        $this->registerArgument('path', 'string', ' Path to the CSS/JS file which should be included');
-        $this->registerArgument('compress', 'boolean', 'Define if file should be compressed', false, false);
+        $this->registerArgument(
+            'path',
+            'string',
+            ' Path to the CSS/JS file which should be included'
+        );
+        $this->registerArgument(
+            'compress',
+            'boolean',
+            'Define if file should be compressed',
+            false,
+            false
+        );
         $this->registerArgument(
             'isJsFile',
             'boolean',
@@ -80,6 +93,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
 
     /**
      * Include a CSS/JS file
+     * @throws \InvalidArgumentException
      */
     public function render()
     {
@@ -89,7 +103,9 @@ class IncludeFileViewHelper extends AbstractViewHelper
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         // JS
-        if (strtolower(substr($this->arguments['path'], -3)) === '.js' || $this->arguments['isJsFile'] === true) {
+        if ($this->arguments['isJsFile'] === true
+            || strtolower(substr($this->arguments['path'], -3)) === '.js'
+        ) {
             $pageRenderer->addJsFooterFile(
                 $this->arguments['path'],
                 null,

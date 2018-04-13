@@ -29,7 +29,9 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  * </code>
  *
  *
@@ -57,22 +59,26 @@ class MetaTagViewHelper extends AbstractTagBasedViewHelper
 
     /**
      * Arguments initialization
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
     public function initializeArguments()
     {
         $this->registerTagAttribute('property', 'string', 'Property of meta tag');
         $this->registerTagAttribute('name', 'string', 'Content of meta tag using the name attribute');
         $this->registerTagAttribute('content', 'string', 'Content of meta tag');
+        $this->registerArgument('useCurrentDomain', 'boolean', 'Use current domain', false, false);
+        $this->registerArgument('forceAbsoluteUrl', 'boolean', 'Force absolut domain', false, false);
     }
 
     /**
      * Renders a meta tag
      *
-     * @param bool $useCurrentDomain If set, current domain is used
-     * @param bool $forceAbsoluteUrl If set, absolute url is forced
      */
-    public function render($useCurrentDomain = false, $forceAbsoluteUrl = false)
+    public function render()
     {
+        $useCurrentDomain = $this->arguments['useCurrentDomain'];
+        $forceAbsoluteUrl = $this->arguments['forceAbsoluteUrl'];
+
         // set current domain
         if ($useCurrentDomain) {
             $this->tag->addAttribute('content', GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'));
@@ -82,7 +88,13 @@ class MetaTagViewHelper extends AbstractTagBasedViewHelper
         if ($forceAbsoluteUrl) {
             $path = $this->arguments['content'];
             if (!GeneralUtility::isFirstPartOfStr($path, GeneralUtility::getIndpEnv('TYPO3_SITE_URL'))) {
-                $this->tag->addAttribute('content', rtrim(GeneralUtility::getIndpEnv('TYPO3_SITE_URL'), '/') . '/' . ltrim($this->arguments['content']), '/');
+                $this->tag->addAttribute(
+                    'content',
+                    rtrim(GeneralUtility::getIndpEnv('TYPO3_SITE_URL'), '/')
+                    . '/'
+                    . ltrim($this->arguments['content']),
+                    '/'
+                );
             }
         }
 

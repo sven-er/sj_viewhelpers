@@ -16,6 +16,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  */
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
+use TYPO3\CMS\Fluid\Core\ViewHelper\Exception;
 use TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper;
 
 /* Extends the ImageViewhelper to allow lazyload
@@ -27,7 +28,9 @@ use TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  * </code>
  *
  * <code>
@@ -57,16 +60,17 @@ class LazyImageViewHelper extends ImageViewHelper
      *
      * @see https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Image/
      *
-     * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
+     * @throws \Exception
+     * @throws Exception
      * @return string Rendered tag
      */
     public function render()
     {
         if (
-            (is_null($this->arguments['src']) && is_null($this->arguments['image']))
-            || (!is_null($this->arguments['src']) && !is_null($this->arguments['image']))
+            ($this->arguments['src'] === null && $this->arguments['image'] === null)
+            || ($this->arguments['src'] !== null && $this->arguments['image'] !== null)
         ) {
-            throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception(
+            throw new Exception(
                 'You must either specify a string src or a File object.',
                 1382284106
             );
@@ -114,7 +118,7 @@ class LazyImageViewHelper extends ImageViewHelper
             if (empty($this->arguments['alt'])) {
                 $this->tag->addAttribute('alt', $alt);
             }
-            if (empty($this->arguments['title']) && $title) {
+            if ($title && empty($this->arguments['title'])) {
                 $this->tag->addAttribute('title', $title);
             }
         } catch (ResourceDoesNotExistException $e) {

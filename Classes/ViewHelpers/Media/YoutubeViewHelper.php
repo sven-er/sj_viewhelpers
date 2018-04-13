@@ -39,11 +39,24 @@ class YoutubeViewHelper extends AbstractViewHelper
      * Initialize arguments.
      *
      * @api
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
     public function initializeArguments()
     {
-        $this->registerArgument('width', 'integer', 'Width of the video in pixels. Defaults to 640 for 16:9 content.', false, 640);
-        $this->registerArgument('height', 'integer', 'Height of the video in pixels. Defaults to 385 for 16:9 content.', false, 385);
+        $this->registerArgument(
+            'width',
+            'integer',
+            'Width of the video in pixels. Defaults to 640 for 16:9 content.',
+            false,
+            640
+        );
+        $this->registerArgument(
+            'height',
+            'integer',
+            'Height of the video in pixels. Defaults to 385 for 16:9 content.',
+            false,
+            385
+        );
     }
 
     /**
@@ -51,7 +64,7 @@ class YoutubeViewHelper extends AbstractViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $width = $this->arguments['width'];
         $height = $this->arguments['height'];
@@ -59,10 +72,9 @@ class YoutubeViewHelper extends AbstractViewHelper
 
         $url = $this->getYoutubeUrl($this->renderChildren());
 
-        if (!is_null($url)) {
+        if ($url !== null) {
             $content = '<iframe width="' . $width . '" height="' . $height . '" src="' . htmlspecialchars($url) . '" frameborder="0"></iframe>';
         }
-
         return $content;
     }
 

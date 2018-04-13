@@ -29,15 +29,17 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * Original from EXT:news
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  * </code>
  *
  * <code>
  * <sj:headerData>
- * 		<link rel="alternate"
- * 			type="application/rss+xml"
- * 			title="RSS 2.0"
- * 			href="<f:uri.page additionalParams="{type:9818}"/>" />
+ *        <link rel="alternate"
+ *            type="application/rss+xml"
+ *            title="RSS 2.0"
+ *            href="<f:uri.page additionalParams="{type:9818}"/>" />
  * </sj:headerData>
  * </code>
  * <output>
@@ -48,7 +50,8 @@ class HeaderDataViewHelper extends AbstractViewHelper
 {
     /**
      * Renders HeaderData
-    */
+     * @throws \InvalidArgumentException
+     */
     public function render()
     {
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);

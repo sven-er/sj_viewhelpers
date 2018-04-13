@@ -24,7 +24,9 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  * </code>
  *
  *
@@ -34,29 +36,54 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  *  </sj:arrayElement>
  * </code>
  * <output>
- * 	"array[arrayKey]"
+ *    "array[arrayKey]"
  * </output>
   */
 class ArrayElementViewHelper extends AbstractViewHelper
 {
     /**
-     * @param array $array to search in
-     * @param string $key to search for
-     * @param string $variableName variable name to set
+     * Initialize arguments
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument(
+            'array',
+            'array',
+            'array to search in',
+            true
+        );
+        $this->registerArgument(
+            'key',
+            'string',
+            '$key to search for',
+            true
+        );
+        $this->registerArgument(
+            'variableName',
+            'string',
+            'variable name to set',
+            false,
+            'element'
+        );
+    }
+    /**
      * @return string
      */
-    public function render($array, $key, $variableName = 'element')
+    public function render(): string
     {
-        if (!is_array($array) || empty($array) || !isset($array[$key])) {
+        if (!\is_array($this->arguments['array'])
+            || empty($this->arguments['array'])
+            || !isset($this->arguments['array'][$this->arguments['key']])
+        ) {
             $value = null;
         } else {
-            $value = $array[$key];
+            $value = $this->arguments['array'][$this->arguments['key']];
         }
 
-        $this->templateVariableContainer->add($variableName, $value);
+        $this->templateVariableContainer->add($this->arguments['variableName'], $value);
         $content = $this->renderChildren();
-        $this->templateVariableContainer->remove($variableName);
-
+        $this->templateVariableContainer->remove($this->arguments['variableName']);
         return $content;
     }
 }

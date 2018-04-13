@@ -21,10 +21,12 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * ViewHelper to wrap the FirstWord of a Text
  *
  * # Example: Basic example
- * # Include in template
+ * #Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  * </code>
  *
  * <code>
@@ -37,26 +39,45 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class FirstWordWrapViewHelper extends AbstractViewHelper
 {
     /**
+     * Initialize arguments
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument(
+            'content',
+            'string',
+            'Content string',
+            false
+        );
+        $this->registerArgument(
+            'wrap',
+            'string',
+            'A wrap value - [part 1] | [part 2]',
+            false
+        );
+    }
+    /**
      * Wrap the First Word
      *
-     * @param string $content Content string
-     * @param string $wrap A wrap value - [part 1] | [part 2]
      * @return string
      */
-    public function render($content = null, $wrap = null)
+    public function render()
     {
-        if ($content === null) {
-            $content = $this->renderChildren();
+        if ($this->arguments['content'] === null) {
+            $this->arguments['content'] = $this->renderChildren();
         }
-        if ($wrap !== null) {
-            $wrapArr = GeneralUtility::trimExplode('|', $wrap);
+        if ($this->arguments['wrap'] !== null) {
+            $wrapArr = GeneralUtility::trimExplode('|', $this->arguments['wrap']);
             $tempContent = GeneralUtility::trimExplode(' ', $this->renderChildren());
-            if (count($wrapArr) > 0 && count($tempContent) > 0) {
-                $content = $wrapArr[0] . $tempContent[0] . $wrapArr[1];
+            if (\count($wrapArr) > 0 &&
+                \count($tempContent) > 0
+            ) {
+                $this->arguments['content'] = $wrapArr[0] . $tempContent[0] . $wrapArr[1];
                 unset($tempContent[0]);
-                $content .= ' ' . implode(' ', $tempContent);
+                $this->arguments['content'] .= ' ' . implode(' ', $tempContent);
             }
         }
-        return $content;
+        return $this->arguments['content'];
     }
 }

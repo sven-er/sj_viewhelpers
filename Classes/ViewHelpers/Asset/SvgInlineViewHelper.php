@@ -23,7 +23,11 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * # Example:
  * Include in template
  *
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ * <code>
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
+ * </code>
  *
  * # Example: Basic example
  *
@@ -47,11 +51,16 @@ class SvgInlineViewHelper extends AbstractViewHelper
 
     /**
      * Initializes the arguments
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
     public function initializeArguments()
     {
-        parent::initializeArguments();
-        $this->registerArgument('path', 'string', 'Path to the Folder with the svg File', true);
+        $this->registerArgument(
+            'path',
+            'string',
+            'Path to the Folder with the svg File',
+            true
+        );
     }
 
     /**
@@ -59,10 +68,10 @@ class SvgInlineViewHelper extends AbstractViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $content = trim($this->renderChildren());
-        if (!is_null($this->arguments['path'])) {
+        if ($this->arguments['path'] !== null) {
             return GeneralUtility::getUrl(
                 GeneralUtility::getFileAbsFileName($this->arguments['path'] . $content . '.svg')
             );

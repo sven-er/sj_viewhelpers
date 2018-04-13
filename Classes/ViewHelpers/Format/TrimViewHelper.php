@@ -24,7 +24,9 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * # Include in template
  *
  * <code>
- * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
+ *  <html data-namespace-typo3-fluid="true"
+ *       xmlns:sj="http://typo3.org/ns/SvenJuergens/SjViewhelpers/ViewHelpers"
+ *  >
  * </code>
  *
  * <sj:format.trim content="foo" characters="foo">
@@ -37,20 +39,37 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 class TrimViewHelper extends AbstractViewHelper
 {
     /**
-     * @param string $content
-     * @param string $characters
+     * Initialize arguments
+     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument(
+            'content',
+            'string',
+            'Content string',
+            false
+        );
+        $this->registerArgument(
+            'characters',
+            'string',
+            'characters to trim',
+            false
+        );
+    }
+    /**
      * @return string
      */
-    public function render($content = null, $characters = null)
+    public function render(): string
     {
-        if ($content === null) {
-            $content = $this->renderChildren();
+        if ($this->arguments['content'] === null) {
+            $this->arguments['content'] = $this->renderChildren();
         }
-        if (empty($characters) === false) {
-            $content = trim($content, $characters);
+        if ($this->arguments['characters'] !== null) {
+            $this->arguments['content'] = trim($this->arguments['content'], $this->arguments['characters']);
         } else {
-            $content = trim($content);
+            $this->arguments['content'] = trim($this->arguments['content']);
         }
-        return $content;
+        return $this->arguments['content'];
     }
 }
