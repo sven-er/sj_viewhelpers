@@ -2,15 +2,13 @@
 
 # top-most EditorConfig file
 root = true
-charset = utf-8
-
-# Get rid of whitespace to avoid diffs with a bunch of EOL changes
-trim_trailing_whitespace = true
 
 # Unix-style newlines with a newline ending every file
 [*]
+charset = utf-8
 end_of_line = lf
 insert_final_newline = true
+trim_trailing_whitespace = true
 
 # CSS-Files
 [*.css]
@@ -20,22 +18,22 @@ indent_size = 4
 # HTML-Files
 [*.html]
 indent_style = tab
-indent_size = 4
+indent_size = 2
 
 # TMPL-Files
 [*.tmpl]
 indent_style = tab
 indent_size = 4
 
-# LESS-Files
-[*.less]
-indent_style = tab
+# SCSS-Files
+[*.scss]
+indent_style = space
 indent_size = 4
 
 # JS-Files
 [*.js]
-indent_style = tab
-indent_size = 4
+indent_style = space
+indent_size = 2
 
 # JSON-Files
 [*.json]
@@ -49,15 +47,43 @@ indent_size = 4
 
 # ReST-Files
 [*.rst]
-indent_style = tab
-indent_size = 4
+indent_style = space
+indent_size = 3
 
 # MD-Files
 [*.md]
 indent_style = space
 indent_size = 4
 
-# package.json or .travis.yml
-[{package.json,.travis.yml}]
+# YAML-Files
+[{*.yaml,*.yml}]
 indent_style = space
+indent_size = 2
+
+# package.json
+# .travis.yml
+# bower.json
+[{package.json,.travis.yml,bower.json}]
+indent_style = space
+indent_size = 2
+
+# TypoScript
+[*.ts]
+indent_style = space
+indent_size = 2
+[*.typoscript]
+indent_style = space
+indent_size = 2
+[*.tsconfig]
+indent_style = space
+indent_size = 2
+
+# XLF-Files
+[*.xlf]
+indent_style = tab
+indent_size = 4
+
+# SQL-Files
+[*.sql]
+indent_style = tab
 indent_size = 2
