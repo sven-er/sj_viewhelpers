@@ -16,6 +16,10 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -43,6 +47,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class CssInlineViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
 
     /**
      * Initialize arguments
@@ -66,21 +71,25 @@ class CssInlineViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Include CSS Content
-     *
-     * @throws \InvalidArgumentException
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
      */
-    public function render()
-    {
-        $content = trim($this->renderChildren());
-        if ($this->arguments['path'] !== null && strtolower(substr($this->arguments['path'], -4)) === '.css') {
-            $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($this->arguments['path']));
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $content = $renderChildrenClosure();
+        if ($arguments['path'] !== null && strtolower(substr($arguments['path'], -4)) === '.css') {
+            $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($arguments['path']));
         }
         $name = sha1($content);
+        $compress = (bool)$arguments['compress'];
         if (!empty($content)) {
             /** @var PageRenderer $pageRenderer */
             $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-            $pageRenderer->addCssInlineBlock($name, $content, $this->arguments['compress']);
+            $pageRenderer->addCssInlineBlock($name, $content, $compress);
         }
     }
 }
