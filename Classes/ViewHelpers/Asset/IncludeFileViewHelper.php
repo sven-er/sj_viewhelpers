@@ -16,6 +16,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -42,6 +44,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class IncludeFileViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
 
     /**
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
@@ -92,40 +95,43 @@ class IncludeFileViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Include a CSS/JS file
-     * @throws \InvalidArgumentException
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
      */
-    public function render()
-    {
-        if ($this->arguments['external'] === false) {
-            $this->arguments['path'] = $GLOBALS['TSFE']->tmpl->getFileName($this->arguments['path']);
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        if ($arguments['external'] === false) {
+            $arguments['path'] = $GLOBALS['TSFE']->tmpl->getFileName($arguments['path']);
         }
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         // JS
-        if ($this->arguments['isJsFile'] === true
-            || strtolower(substr($this->arguments['path'], -3)) === '.js'
+        if ($arguments['isJsFile'] === true
+            || strtolower(substr($arguments['path'], -3)) === '.js'
         ) {
             $pageRenderer->addJsFooterFile(
-                $this->arguments['path'],
+                $arguments['path'],
                 null,
-                $this->arguments['compress'],
-                null,
-                null,
+                $arguments['compress'],
                 null,
                 null,
-                $this->arguments['async'],
-                $this->arguments['integrity']
+                null,
+                null,
+                $arguments['async'],
+                $arguments['integrity']
             );
-
             // CSS
-        } elseif (strtolower(substr($this->arguments['path'], -4)) === '.css') {
+        } elseif (strtolower(substr($arguments['path'], -4)) === '.css') {
             $pageRenderer->addCssFile(
-                $this->arguments['path'],
+                $arguments['path'],
                 'stylesheet',
                 'all',
                 null,
-                $this->arguments['compress']
+                $arguments['compress']
             );
         }
     }
