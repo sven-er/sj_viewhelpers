@@ -16,6 +16,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -38,6 +40,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class JsInlineViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
     /**
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
@@ -67,25 +70,29 @@ class JsInlineViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Include JS Content
-     * @throws \InvalidArgumentException
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
      */
-    public function render()
-    {
-        $content = trim($this->renderChildren());
-        if ($this->arguments['path'] !== null
-            && strtolower(substr($this->arguments['path'], -3)) === '.js'
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $content = $renderChildrenClosure();
+        if ($arguments['path'] !== null
+            && strtolower(substr($arguments['path'], -3)) === '.js'
         ) {
-            $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($this->arguments['path']));
+            $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($arguments['path']));
         }
         $name = md5(GeneralUtility::minifyJavaScript($content));
 
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-        if ($this->arguments['position'] === 'bottom') {
-            $pageRenderer->addJsFooterInlineCode($name, $content, $this->arguments['compress']);
+        if ($arguments['position'] === 'bottom') {
+            $pageRenderer->addJsFooterInlineCode($name, $content, $arguments['compress']);
         } else {
-            $pageRenderer->addJsInlineCode($name, $content, $this->arguments['compress']);
+            $pageRenderer->addJsInlineCode($name, $content, $arguments['compress']);
         }
     }
 }
