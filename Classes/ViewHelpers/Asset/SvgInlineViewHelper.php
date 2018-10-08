@@ -15,6 +15,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -41,6 +43,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class SvgInlineViewHelper extends AbstractViewHelper
 {
+    use CompileWithRenderStatic;
 
     /**
      * View helper returns HTML, thus we need to disable output escaping
@@ -64,16 +67,20 @@ class SvgInlineViewHelper extends AbstractViewHelper
     }
 
     /**
-     * Include SVG Content
-     *
-     * @return string
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     * @return mixed|string
      */
-    public function render(): string
-    {
-        $content = trim($this->renderChildren());
-        if ($this->arguments['path'] !== null) {
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $content = trim($renderChildrenClosure());
+        if ($arguments['path'] !== null) {
             return GeneralUtility::getUrl(
-                GeneralUtility::getFileAbsFileName($this->arguments['path'] . $content . '.svg')
+                GeneralUtility::getFileAbsFileName($arguments['path'] . $content . '.svg')
             );
         }
         return 'missing path to Folder /' . $content;
