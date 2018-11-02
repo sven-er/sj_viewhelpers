@@ -1,5 +1,5 @@
 {
-    "name": "SvenJuergens/sj-viewhelpers",
+    "name": "svenjuergens/sj-viewhelpers",
     "type": "typo3-cms-extension",
     "description": "Small Collection of ViewHelpers",
     "license": ["GPL-2.0+"],
