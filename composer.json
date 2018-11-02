@@ -1,0 +1,25 @@
+{
+    "name": "SvenJuergens/sj-viewhelpers",
+    "type": "typo3-cms-extension",
+    "description": "Small Collection of ViewHelpers"
+    "license": ["GPL-2.0+"]
+    "support": {
+        "issues": "https://github.com/SvenJuergens/sj_viewhelpers/issues"
+    },
+    "require": {
+        "typo3/cms-core": "^8.7.0 || ^9.5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SvenJuergens\\SjViewhelpers\\": "Classes/"
+        }
+    },
+    "replace": {
+        "sj_viewhelpers": "self.version"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "sj_viewhelpers"
+        }
+    }
+}
