@@ -36,6 +36,13 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 class YoutubeViewHelper extends AbstractViewHelper
 {
     /**
+     * View helper returns HTML, thus we need to disable output escaping
+     *
+     * @var bool
+     */
+    protected $escapeOutput = false;
+
+    /**
      * Initialize arguments.
      *
      * @api
