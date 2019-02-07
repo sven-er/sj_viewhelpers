@@ -383,7 +383,7 @@
     </xsd:element>
     <xsd:element name="headerData">
         <xsd:annotation>
-            <xsd:documentation><![CDATA[\TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+            <xsd:documentation><![CDATA[\TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 
  ViewHelper to render data in <head> section of website
 

@@ -14,7 +14,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
  * If Viewhelper vor LanguageCode
