@@ -15,6 +15,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
@@ -52,9 +53,10 @@ class TestIntViewHelper extends AbstractConditionViewHelper
 
     /**
      * @param array $arguments
+     * @param RenderingContextInterface $renderingContext
      * @return bool
      */
-    protected static function evaluateCondition($arguments = null) : bool
+    public static function verdict(array $arguments, RenderingContextInterface $renderingContext) :bool
     {
         return MathUtility::canBeInterpretedAsInteger($arguments['value']) === true;
     }

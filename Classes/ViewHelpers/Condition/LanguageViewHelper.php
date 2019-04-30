@@ -53,8 +53,12 @@ class LanguageViewHelper extends AbstractConditionViewHelper
         $this->registerArgument('value', 'string', 'Language Code');
     }
 
-
-    protected static function evaluateCondition($arguments = null) : bool
+    /**
+     * @param array $arguments
+     * @param RenderingContextInterface $renderingContext
+     * @return bool
+     */
+    public static function verdict(array $arguments, RenderingContextInterface $renderingContext) :bool
     {
         $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
         $siteLanguage = $request ? $request->getAttribute('language') : null;
