@@ -14,7 +14,11 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+use TYPO3\CMS\Core\Site\Entity\SiteLanguage;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
  * If Viewhelper vor LanguageCode
@@ -41,7 +45,7 @@ class LanguageViewHelper extends AbstractConditionViewHelper
 
     /**
      * Initialize arguments
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
     public function initializeArguments()
     {
@@ -52,14 +56,13 @@ class LanguageViewHelper extends AbstractConditionViewHelper
 
     protected static function evaluateCondition($arguments = null) : bool
     {
-        $languageCode = '';
-        if (TYPO3_MODE === 'FE') {
-            if (isset($GLOBALS['TSFE']->config['config']['language'])) {
-                $languageCode = $GLOBALS['TSFE']->config['config']['language'];
-            }
-        } elseif (\strlen($GLOBALS['BE_USER']->uc['lang']) > 0) {
-            $languageCode = $GLOBALS['BE_USER']->uc['lang'];
+        $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
+        $siteLanguage = $request ? $request->getAttribute('language') : null;
+        if ($siteLanguage instanceof SiteLanguage) {
+            $currentLanguageCode = $siteLanguage->getTypo3Language();
+        } else {
+            $currentLanguageCode = $GLOBALS['TSFE']->config['config']['language'] ?? null;
         }
-        return $languageCode === $arguments['value'];
+        return $currentLanguageCode === $arguments['value'];
     }
 }
