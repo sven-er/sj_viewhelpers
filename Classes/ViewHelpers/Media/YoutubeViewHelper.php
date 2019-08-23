@@ -83,7 +83,7 @@ class YoutubeViewHelper extends AbstractViewHelper
         $height = $arguments['height'];
         $content = '';
 
-        $url = static::getYoutubeUrl($renderChildrenClosure);
+        $url = static::getYoutubeUrl((string)$renderChildrenClosure());
 
         if ($url !== null) {
             $content = '<iframe width="' . $width . '" height="' . $height . '" src="' . htmlspecialchars($url) . '" frameborder="0"></iframe>';
