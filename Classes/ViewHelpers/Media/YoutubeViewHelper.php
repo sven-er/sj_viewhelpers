@@ -98,7 +98,7 @@ class YoutubeViewHelper extends AbstractViewHelper
             $videoId = $matches[2];
         }
         if ($videoId) {
-            $youtubeUrl = 'https://www.youtube.com/embed/' . $videoId . '?fs=1&wmode=opaque';
+            $youtubeUrl = 'https://www.youtube-nocookie.com/embed/' . $videoId;
         }
 
         return $youtubeUrl;
