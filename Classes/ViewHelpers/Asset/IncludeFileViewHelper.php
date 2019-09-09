@@ -16,6 +16,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -98,6 +99,10 @@ class IncludeFileViewHelper extends AbstractViewHelper
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
+     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileNameException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidPathException
      */
     public static function renderStatic(
         array $arguments,
@@ -105,7 +110,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ) {
         if ($arguments['external'] === false) {
-            $arguments['path'] = $GLOBALS['TSFE']->tmpl->getFileName($arguments['path']);
+            $arguments['path'] = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize((string)$arguments['path']);
         }
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
