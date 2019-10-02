@@ -16,7 +16,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
  * ViewHelper to render meta tags
@@ -34,38 +35,36 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
  *  >
  * </code>
  *
- *
  * <code>
- * <sj:metaTag property="og:title" content="{object.title}" />
+ *  <sj:metaTag type="property" name="og:title" content="{object.title}" />
  * </code>
  * <output>
  * <meta property="og:title" content="TYPO3 is awesome" />
  * </output>
  *
- * # Example: Force the attribute "name"
+ * # Example: Using the attribute "name"
  * <code>
- * <sj:metaTag name="keywords" content="{newsItem.keywords}" />
+ *  <sj:metaTag type="name" name="keywords" content="{newsItem.keywords}" />
  * </code>
  * <output>
  * <meta name="keywords" content="news 1, news 2" />
  * </output>
  */
-class MetaTagViewHelper extends AbstractTagBasedViewHelper
+class MetaTagViewHelper extends AbstractViewHelper
 {
-    /**
-     * @var string
-     */
-    protected $tagName = 'meta';
 
     /**
      * Arguments initialization
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
-        $this->registerTagAttribute('property', 'string', 'Property of meta tag');
-        $this->registerTagAttribute('name', 'string', 'Content of meta tag using the name attribute');
-        $this->registerTagAttribute('content', 'string', 'Content of meta tag');
+        $this->registerArgument('type', 'string', 'The type of the meta tag. Allowed values are property, name or http-equiv', true, 'name' );
+        $this->registerArgument('name', 'string', 'The name of the property to add', true);
+        $this->registerArgument('content', 'string', 'The content of the meta tag',false );
+        $this->registerArgument('subProperties', 'array', 'Subproperties of the meta tag (like e.g. og:image:width -> {width: 400, height:400})',false );
+        $this->registerArgument('replace', 'bool', 'Replace earlier set meta tag',false, true );
+
         $this->registerArgument('useCurrentDomain', 'boolean', 'Use current domain', false, false);
         $this->registerArgument('forceAbsoluteUrl', 'boolean', 'Force absolut domain', false, false);
     }
@@ -81,26 +80,28 @@ class MetaTagViewHelper extends AbstractTagBasedViewHelper
 
         // set current domain
         if ($useCurrentDomain) {
-            $this->tag->addAttribute('content', GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'));
+            $this->arguments['content'] = GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL');
         }
 
         // prepend current domain
-        if ($forceAbsoluteUrl) {
-            $path = $this->arguments['content'];
-            if (!GeneralUtility::isFirstPartOfStr($path, GeneralUtility::getIndpEnv('TYPO3_SITE_URL'))) {
-                $this->tag->addAttribute(
-                    'content',
-                    rtrim(GeneralUtility::getIndpEnv('TYPO3_SITE_URL'), '/')
-                    . '/'
-                    . ltrim($this->arguments['content']),
-                    '/'
-                );
-            }
+        if ($forceAbsoluteUrl && !GeneralUtility::isFirstPartOfStr($this->arguments['content'], GeneralUtility::getIndpEnv('TYPO3_SITE_URL'))
+        ) {
+            $this->arguments['content'] =
+                rtrim(GeneralUtility::getIndpEnv('TYPO3_SITE_URL'), '/')
+                . '/'
+                . ltrim($this->arguments['content'])
+            ;
         }
 
         if ($useCurrentDomain || (isset($this->arguments['content']) && !empty($this->arguments['content']))) {
             $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-            $pageRenderer->addMetaTag($this->tag->render());
+            $pageRenderer->setMetaTag(
+                (string)$this->arguments['type'],
+                (string)$this->arguments['name'],
+                (string)$this->arguments['content'],
+                (array)$this->arguments['subProperties'],
+                (bool)$this->arguments['replace']
+            );
         }
     }
 }
