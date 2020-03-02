@@ -15,7 +15,7 @@
         }
     },
     "replace": {
-        "sj_viewhelpers": "self.version"
+        "svenjuergens/sj_viewhelpers": "self.version"
     },
     "extra": {
         "typo3/cms": {
