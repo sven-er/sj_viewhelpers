@@ -29,12 +29,9 @@ $EM_CONF[$_EXTKEY] = [
     'clearCacheOnLoad' => 0,
     'lockType' => '',
     'author_company' => '',
-    'version' => '6.0.0',
+    'version' => '6.0.1',
     'constraints' => [
         'depends' => [
         ]
-    ],
-    'autoload' =>[
-        'psr-4' => ['SvenJuergens\\SjViewhelpers\\' => 'Classes']
-    ],
+    ]
 ];
