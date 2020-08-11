@@ -14,6 +14,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
+use SvenJuergens\SjViewhelpers\Resource\ResourceCompressor;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -89,7 +91,9 @@ class CssInlineViewHelper extends AbstractViewHelper
         if (!empty($content)) {
             /** @var PageRenderer $pageRenderer */
             $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
-            $pageRenderer->addCssInlineBlock($name, $content, $compress);
+            /** @var ResourceCompressor $compressor */
+            $compressor = GeneralUtility::makeInstance(ResourceCompressor::class);
+            $pageRenderer->addCssInlineBlock($name, $compressor->publicCompressCssString((string)$content), $compress);
         }
     }
 }
