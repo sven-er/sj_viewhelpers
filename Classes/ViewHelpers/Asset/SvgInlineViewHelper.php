@@ -40,7 +40,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  * # Example: Basic example
  *
  * <code>
- * <sj:asset.svgInline path="{settings.svgInlinePathToFolder}">contentIconPin</sj:svgInline>
+ * <sj:asset.svgInline path="{settings.svgInlinePathToFolder}">contentIconPin</sj:asset.svgInline>
  * </code>
  *
  * <output>
