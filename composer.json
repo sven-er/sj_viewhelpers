@@ -7,8 +7,11 @@
         "issues": "https://github.com/SvenJuergens/sj_viewhelpers/issues"
     },
     "require": {
-       "typo3/cms-core": "^9.5.20 || ^10.4.6"
-    },
+       "typo3/cms-core": "^9.5.20 || ^10.4.6",
+		"ext-libxml": "*",
+		"ext-dom": "*",
+		"ext-simplexml": "*"
+	},
     "autoload": {
         "psr-4": {
             "SvenJuergens\\SjViewhelpers\\": "Classes/"

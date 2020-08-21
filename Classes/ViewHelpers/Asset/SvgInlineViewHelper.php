@@ -71,6 +71,9 @@ class SvgInlineViewHelper extends AbstractViewHelper
         $this->registerArgument('class', 'string', 'Css class for the svg');
         $this->registerArgument('width', 'string', 'Width of the svg.', false);
         $this->registerArgument('height', 'string', 'Height of the svg.', false);
+        $this->registerArgument('title', 'string', 'Title tag of the svg.', false);
+        $this->registerArgument('description', 'string', 'Description of the svg.', false);
+        $this->registerArgument('setRole', 'bool', 'Add role="img" to the svg.', false, true);
     }
 
     /**
@@ -118,6 +121,14 @@ class SvgInlineViewHelper extends AbstractViewHelper
             $svgElement = self::setAttribute($svgElement, 'width', (int)$arguments['width']);
             $svgElement = self::setAttribute($svgElement, 'height', (int)$arguments['height']);
 
+            if($arguments['setRole'] === true){
+                $svgElement = self::setAttribute($svgElement, 'role', 'img');
+            }
+
+            $svgElement = self::setChild($svgElement, 'desc', filter_var(trim((string)$arguments['description']), FILTER_SANITIZE_STRING));
+            $svgElement = self::setChild($svgElement, 'title', filter_var(trim((string)$arguments['title']), FILTER_SANITIZE_STRING));
+
+
             // remove xml version tag
             $domXml = dom_import_simplexml($svgElement);
             return $domXml->ownerDocument->saveXML($domXml->ownerDocument->documentElement);
@@ -141,6 +152,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
      * @param \SimpleXMLElement $element
      * @param string $attribute
      * @param mixed $value
+     * @return \SimpleXMLElement
      */
     protected static function setAttribute(\SimpleXMLElement $element, $attribute, $value): \SimpleXMLElement
     {
@@ -156,15 +168,41 @@ class SvgInlineViewHelper extends AbstractViewHelper
     }
 
     /**
+     * @param \SimpleXMLElement $element
+     * @param string $child
+     * @param mixed $value
+     * @return \SimpleXMLElement
+     */
+    protected static function setChild(\SimpleXMLElement $element, $child, $value): \SimpleXMLElement
+    {
+        if ($value) {
+            if (isset($element->children()->$child)) {
+                $element->children()->$child = $value;
+            } else {
+                // Source https://stackoverflow.com/a/6200894
+                $targetDom = dom_import_simplexml($element);
+                $hasChildren = $targetDom->hasChildNodes();
+                $newNode = $element->addChild($child, $value);
+                if ($hasChildren){
+                    $newNodeDom = $targetDom->ownerDocument->importNode(dom_import_simplexml($newNode), true);
+                    $targetDom->insertBefore($newNodeDom, $targetDom->firstChild);
+                    $element = simplexml_import_dom($targetDom);
+                }
+            }
+        }
+        return $element;
+    }
+
+    /**
      * Return an instance of ImageService using object manager
      *
      * @return ImageService
-     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    protected static function getImageService()
+    protected static function getImageService(): ImageService
     {
-        /** @var ObjectManager $objectManager */
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        return $objectManager->get(ImageService::class);
+        /** @var ImageService $objectManager */
+        return GeneralUtility::makeInstance(ObjectManager::class)
+            ->get(ImageService::class);
+
     }
 }
