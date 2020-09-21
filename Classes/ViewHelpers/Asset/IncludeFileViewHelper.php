@@ -67,7 +67,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
         $this->registerArgument(
             'isJsFile',
             'boolean',
-            'Define that file is a JS File, useful for jsFiles withs Params 
+            'Define that file is a JS File, useful for jsFiles withs Params
              exp: //maps.googleapis.com/maps/api/js?sensor=false',
             false,
             false
@@ -90,7 +90,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
         $this->registerArgument(
             'integrity',
             'string',
-            '(Since TYPO3 7.3) Adds the integrity attribute to the script element to let 
+            '(Since TYPO3 7.3) Adds the integrity attribute to the script element to let
             browsers ensure subresource integrity, JS only'
         );
     }
@@ -110,7 +110,15 @@ class IncludeFileViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ) {
         if ($arguments['external'] === false) {
-            $arguments['path'] = GeneralUtility::makeInstance(FilePathSanitizer::class)->sanitize((string)$arguments['path']);
+            try {
+                $arguments['path'] = GeneralUtility::makeInstance(FilePathSanitizer::class)
+                    ->sanitize((string)$arguments['path']);
+            } catch (\Exception $e) {
+                $arguments['path'] = null;
+            }
+        }
+        if(empty($arguments['path'])){
+            return;
         }
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
