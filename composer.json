@@ -7,7 +7,7 @@
         "issues": "https://github.com/SvenJuergens/sj_viewhelpers/issues"
     },
     "require": {
-       "typo3/cms-core": "^9.5.23 || ^10.4.10",
+       "typo3/cms-core": "^9.5.24 || ^10.4.11",
 		"ext-libxml": "*",
 		"ext-dom": "*",
 		"ext-simplexml": "*"
