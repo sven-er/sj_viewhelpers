@@ -1,0 +1,44 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+
+  build-php:
+    name: Build PHP
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        typo3: ['^9', '^10', '^11']
+        php: ['7.2', '7.3', '7.4']
+        exclude:
+          - typo3: '^11'
+            php: '7.2'
+          - typo3: '^11'
+            php: '7.3'
+    steps:
+      - name: Start Database-Server
+        run: |
+          sudo /etc/init.d/mysql start
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Set up PHP Version ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+      - name: Install
+        run: |
+          composer require typo3/cms-core:${{ matrix.typo3 }} --no-progress
+          git checkout composer.json
+      - name: Lint
+        run: |
+          composer test:php:lint
+        env:
+          COMPOSER_PROCESS_TIMEOUT: 1200
+          typo3DatabaseHost: 127.0.0.1
+          typo3DatabaseName: t3func
+          typo3DatabasePassword: root
+          typo3DatabaseUsername: root
